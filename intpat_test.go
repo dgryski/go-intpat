@@ -114,3 +114,28 @@ func BenchmarkTree(b *testing.B) {
 		}
 	}
 }
+
+func TestPrefix(t *testing.T) {
+
+	var inserts = []Key{
+		0x0ABCDEF1,
+		0x0ABCD000,
+		0x0AB00000,
+		0xF0000000,
+	}
+
+	var tree *Tree
+
+	for i, k := range inserts {
+		tree = tree.Insert(k, i)
+	}
+
+	var queries = []Key{
+		0x0ABCDE11,
+		0x0ABC0000,
+	}
+
+	for _, q := range queries {
+		t.Logf("%08x %08x", q, tree.Prefix(q))
+	}
+}

@@ -127,3 +127,17 @@ func (t *Tree) Lookup(key Key) (value interface{}, ok bool) {
 
 	return nil, false
 }
+
+func (t *Tree) Prefix(key Key) (p Key) {
+	if t == nil {
+		return 0
+	}
+	for match(key, t) {
+		if zero(key, t.mask) {
+			t = t.left
+		} else {
+			t = t.right
+		}
+	}
+	return t.getPrefix()
+}
